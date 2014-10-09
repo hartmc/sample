@@ -284,34 +284,7 @@ public class BoardTest extends SerializationTest<Board> {
         board.move(e2, e4);
         assertFalse(fen.equals(board.getFen()));
     }
-    
-    public void testSerialize() throws Exception {
-        Board board = new Board();
-        board.move(e2, e4);
-        SimpleBoardListener listener = new SimpleBoardListener();
-        board.addBoardListener(listener);
-        
-        writeObject(board);
-        Board compare = readObject();
-        
-        assertEquals(B00, board.getECO());
-        assertEquals(board, compare);
-        
-        SimpleBoardListener listener2 = new SimpleBoardListener();
-        compare.addBoardListener(listener2);
-        
-        assertEquals(0, listener.getHistoryChangedCount());
-        assertEquals(0, listener.getHistorySelectionChangedCount());
-        board.move(e7, e5);
-        assertEquals(C20, board.getECO());
-        assertEquals(1, listener.getHistoryChangedCount());
-        assertEquals(0, listener2.getHistoryChangedCount());
-        
-        compare.move(e7, e6);
-        assertEquals(1, listener.getHistoryChangedCount());
-        assertEquals(1, listener2.getHistoryChangedCount());
-    }
-    
+
     public void testBoardRespectsEnPassantSquareInFen() throws Exception {
         Board board = new Board(new Fen("r3k2r/pppp1ppp/8/8/3Pp3/8/PPP1PPPP/R3K2R b Qk d3 0 15"));
         board.move(e4, d3);
